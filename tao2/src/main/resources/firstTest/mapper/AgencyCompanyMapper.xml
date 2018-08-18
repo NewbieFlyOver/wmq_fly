@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="firstTest.mapper.AgencyCompanyMapper" >
+  <resultMap id="BaseResultMap" type="firstTest.dto.AgencyCompany" >
+    <id column="AgencyId" property="agencyid" jdbcType="INTEGER" />
+    <result column="AgencyName" property="agencyname" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    AgencyId, AgencyName
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from agency_company
+    where AgencyId = #{agencyid,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from agency_company
+    where AgencyId = #{agencyid,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="firstTest.dto.AgencyCompany" >
+    insert into agency_company (AgencyId, AgencyName)
+    values (#{agencyid,jdbcType=INTEGER}, #{agencyname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="firstTest.dto.AgencyCompany" >
+    insert into agency_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="agencyid != null" >
+        AgencyId,
+      </if>
+      <if test="agencyname != null" >
+        AgencyName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="agencyid != null" >
+        #{agencyid,jdbcType=INTEGER},
+      </if>
+      <if test="agencyname != null" >
+        #{agencyname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+ 
+  
+  <update id="updateByPrimaryKeySelective" parameterType="firstTest.dto.AgencyCompany" >
+    update agency_company
+    <set >
+      <if test="agencyname != null" >
+        AgencyName = #{agencyname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AgencyId = #{agencyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="firstTest.dto.AgencyCompany" >
+    update agency_company
+    set AgencyName = #{agencyname,jdbcType=VARCHAR}
+    where AgencyId = #{agencyid,jdbcType=INTEGER}
+  </update>
+</mapper>
